@@ -24,3 +24,6 @@ Route::post('/posts','Client\PostController@store')->name('post.store');//保存
 Route::get('/posts/{post}/edit','Client\PostController@edit')->name('post.edit');//编辑文章 --模型绑定
 Route::put('/posts','Client\PostController@update')->name('post.update');//更新文章
 Route::get('/posts/{post}/delete','Client\PostController@delete')->name('post.delete');//更新文章
+
+/*上传图片*/
+Route::any('/posts/image/upload','Client\PostController@uploadImg')->name('post.upload.image');//上传图片

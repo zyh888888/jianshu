@@ -37,7 +37,7 @@
                     <h2 class="blog-post-title"><a href="/posts/{{$post->id}}" >{{$post->title}}</a></h2>
                     <p class="blog-post-meta">{{$post->created_at->toFormattedDateString()}} <a href="/user/{{$post->user_id}}">Kassandra Ankunding2</a></p>
 
-                    <p>{{strlen($post->content)>100 ? mb_substr($post->content,0,100).'...' : $post->content}}</p>
+                    {!! strlen($post->content)>100 ? mb_substr($post->content,0,100).'...' : $post->content !!}
                     <p class="blog-post-meta">赞 0  | 评论 0</p>
                 </div>
             @endforeach

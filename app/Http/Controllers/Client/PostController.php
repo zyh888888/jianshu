@@ -36,14 +36,14 @@ class PostController extends Controller
      */
     public function store()
     {
-        //1数据校验
+        //1 数据校验
         $this->validate(request(),[
             'title'=>'required|string|max:100|min:5',
             'content'=>'required|string|min:10'
         ]);
-        //2 保存数
+        //2 逻辑
         $post = Post::create(request(['title','content']));
-        //3 return 文章列表页面
+        //3 渲染
         return redirect('/posts');
     }
 
@@ -52,4 +52,30 @@ class PostController extends Controller
     {
         return view('post/edit');
     }
+
+    /**
+     * @NOTES:上传图片
+     * @AUTH:zhou.yh
+     * @Date:2019/12/15 23:20
+     * @Version
+     */
+    public function uploadImg(Request $request)
+    {
+        $path = 'image/'.date('Y').'/'.date('m').'/'.date('d');
+        $rule = ['jpg', 'png', 'gif'];
+        $file = $request->file('wangEditorH5File');
+        if($file->isValid()){
+            $clientName = $file->getClientOriginalName();//获取文件名
+            $tmpName = $file->getFileName();
+            $realPath = $file->getRealPath();
+            $entension = $file->getClientOriginalExtension();//获取图片后缀
+            if (!in_array($entension, $rule)) {
+                return '图片格式为jpg,png,gif';
+            }
+            //$newName = md5(date("Y-m-d H:i:s") . $clientName) . "." . $entension;
+            $path = $file->storePublicly($path.'/'.md5(date("Y-m-d H:i:s") . $clientName));
+            return asset('storage/'.$path);
+        }
+    }
+
 }
