@@ -1,6 +1,15 @@
 @extends('layout.main')
 @section('content')
         <div class="col-sm-8 blog-main">
+
+            @if(count($errors) > 0)
+                <div class="alert alert-danger" role="alert">
+                    @foreach($errors->all() as $error)
+                        <li>{{$error}}</li>
+                    @endforeach
+                </div>
+            @endif
+
             <form action="/posts" method="POST">
                 {{csrf_field()}}
 {{--                <input type="hidden" name="_token" value="{{csrf_token()}}">--}}
@@ -14,8 +23,6 @@
                 </div>
                 <button type="submit" class="btn btn-default">提交</button>
             </form>
-            <br>
-
         </div><!-- /.blog-main -->
 @endsection
 

@@ -5,7 +5,7 @@
                 <a class="blog-nav-item " href="/posts">首页</a>
             </li>
             <li>
-                <a class="blog-nav-item" href="/posts/create">写文章</a>
+                <a class="blog-nav-item" href="/create/post">写文章</a>
             </li>
             <li>
                 <a class="blog-nav-item" href="/notices">通知</a>

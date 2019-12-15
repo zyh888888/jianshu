@@ -36,7 +36,6 @@
 <div class="container">
     @include('layout.nav')
     <div class="blog-header"></div>
-
     <div class="row">
         @yield('content')
         @include('layout.sidebar')
