@@ -18,9 +18,9 @@ Route::get('/', function () {
 Route::any('/list','Studys\UserPraiyController@getList')->name('praiy.list');
 /*文章*/
 Route::get('/posts','Client\PostController@index')->name('post.index');//文章列表
-Route::get('/posts/{post}','Client\PostController@show')->name('post.show');//文章详情
-Route::get('/posts/create','Client\PostController@create')->name('post.create');//创建文章
-Route::post('/posts/store','Client\PostController@store')->name('post.store');//保存文章
-Route::get('/posts/{post}/edit','Client\PostController@edit')->name('post.edit');//编辑文章
-Route::put('/posts/store','Client\PostController@update')->name('post.update');//更新文章
+Route::get('/posts/{post}','Client\PostController@show')->name('post.show');//文章详情 --模型绑定
+Route::get('/create/post','Client\PostController@create')->name('post.create');//创建文章
+Route::post('/posts','Client\PostController@store')->name('post.store');//保存文章
+Route::get('/posts/{post}/edit','Client\PostController@edit')->name('post.edit');//编辑文章 --模型绑定
+Route::put('/posts','Client\PostController@update')->name('post.update');//更新文章
 Route::get('/posts/{post}/delete','Client\PostController@delete')->name('post.delete');//更新文章
