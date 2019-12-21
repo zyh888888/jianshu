@@ -11,6 +11,8 @@ class PostController extends Controller
     //文章列表
     public function index()
     {
+//        \Log::info('post_index',\Request::all());
+
         $posts = Post::orderBy('created_at','desc')->paginate(6);
         return view("post/index",['posts'=>$posts]);
     }
@@ -28,7 +30,7 @@ class PostController extends Controller
     }
 
     /**
-     * @NOTES:保存文章逻辑
+     * @NOTES:保存文章
      * @AUTH:zhou.yh
      * @Date:2019/12/15 21:11
      * @Version
@@ -48,9 +50,9 @@ class PostController extends Controller
     }
 
     //编辑
-    public function edit()
+    public function edit(Post $post)
     {
-        return view('post/edit');
+        return view('post/edit',['post'=>$post]);
     }
 
     /**
@@ -61,8 +63,11 @@ class PostController extends Controller
      */
     public function uploadImg(Request $request)
     {
+        //创建图片存储路径
         $path = 'image/'.date('Y').'/'.date('m').'/'.date('d');
         $rule = ['jpg', 'png', 'gif'];
+
+        //获取图片信息
         $file = $request->file('wangEditorH5File');
         if($file->isValid()){
             $clientName = $file->getClientOriginalName();//获取文件名
@@ -72,10 +77,57 @@ class PostController extends Controller
             if (!in_array($entension, $rule)) {
                 return '图片格式为jpg,png,gif';
             }
-            //$newName = md5(date("Y-m-d H:i:s") . $clientName) . "." . $entension;
+
+        //存储图片
             $path = $file->storePublicly($path.'/'.md5(date("Y-m-d H:i:s") . $clientName));
+        //返回图片路径
             return asset('storage/'.$path);
         }
+    }
+
+    /**
+     * @NOTES:更新文章
+     * @AUTH:zhou.yh
+     * @Date:2019/12/19 22:48
+     * @Version
+     */
+    public function update(Post $post)
+    {
+        //TODO:用户权限验证
+
+        //1 数据校验
+        $this->validate(request(),[
+            'title'=>'required|string|max:100|min:5',
+            'content'=>'required|string|min:10'
+        ]);
+
+        //2 逻辑
+        $post->title = request('title');
+        $post->content = request('content');
+        $post->save();
+
+        //渲染
+        //返回文章详情页面
+        return redirect("/posts/{$post->id}");
+    }
+
+    /**
+     * @NOTES:删除文章
+     * @AUTH:zhou.yh
+     * @Date:2019/12/19 23:20
+     * @Version
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     */
+    public function delete(Post $post)
+    {
+        //TODO:用户权限验证
+
+        //逻辑
+        $post->delete();
+        //渲染
+        return redirect('/posts');
     }
 
 }

@@ -10,6 +10,7 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    protected $dateFormat ="U";
     /**
      * The attributes that are mass assignable.
      *
