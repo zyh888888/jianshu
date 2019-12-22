@@ -11,7 +11,6 @@ class PostController extends Controller
     //文章列表
     public function index()
     {
-//        \Log::info('post_index',\Request::all());
 
         $posts = Post::orderBy('created_at','desc')->paginate(6);
         return view("post/index",['posts'=>$posts]);
@@ -43,8 +42,12 @@ class PostController extends Controller
             'title'=>'required|string|max:100|min:5',
             'content'=>'required|string|min:10'
         ]);
+
         //2 逻辑
-        $post = Post::create(request(['title','content']));
+        $user_id = \Auth::id();
+        $param = array_merge(request(['title','content']),compact('user_id'));
+        $post = Post::create($param);
+
         //3 渲染
         return redirect('/posts');
     }
