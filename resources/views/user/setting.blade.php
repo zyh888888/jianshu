@@ -18,6 +18,7 @@
                 <img  class="preview_img" src="{{$user->avatar}}" alt="" class="img-rounded" style="border-radius:500px;">
             </div>
         </div>
+        @include('layout.error')
         <button type="submit" class="btn btn-default">修改</button>
     </form>
     <br>

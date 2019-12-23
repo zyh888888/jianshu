@@ -16,6 +16,9 @@ class LoginController extends Controller
      */
     public function index()
     {
+        if(\Auth::check()){
+            return redirect("/posts");
+        }
         return view('login.index');
     }
 
@@ -42,7 +45,7 @@ class LoginController extends Controller
             return redirect('/posts');
         };
         //渲染
-        return \Redirect::back()->withErrors('邮箱密码不匹配');
+        return back()->withErrors('邮箱密码不匹配');
     }
 
     /**

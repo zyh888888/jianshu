@@ -84,7 +84,7 @@ class PostController extends Controller
         //存储图片
             $path = $file->storePublicly($path.'/'.md5(date("Y-m-d H:i:s") . $clientName));
         //返回图片路径
-            return asset('storage/'.$path);
+            return asset('/storage/'.$path);
         }
     }
 
@@ -96,8 +96,6 @@ class PostController extends Controller
      */
     public function update(Post $post)
     {
-        //TODO:用户权限验证
-
         //1 数据校验
         $this->validate(request(),[
             'title'=>'required|string|max:100|min:5',
@@ -108,6 +106,9 @@ class PostController extends Controller
         $post->title = request('title');
         $post->content = request('content');
         $post->save();
+
+        //策略判断
+        $this->authorize('update',$post);
 
         //渲染
         //返回文章详情页面
@@ -125,8 +126,8 @@ class PostController extends Controller
      */
     public function delete(Post $post)
     {
-        //TODO:用户权限验证
-
+        //策略判断
+        $this->authorize('delete',$post);
         //逻辑
         $post->delete();
         //渲染
