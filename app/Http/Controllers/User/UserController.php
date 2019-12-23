@@ -15,7 +15,8 @@ class UserController extends Controller
      */
     public function setting()
     {
-        return view('user.setting');
+        $user = \Auth::user();
+        return view('user.setting',compact('user'));
     }
 
     /**

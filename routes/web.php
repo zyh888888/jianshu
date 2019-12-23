@@ -13,7 +13,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect("/login");
 });
 
 Route::any('/list','Studys\UserPraiyController@getList')->name('praiy.list');
