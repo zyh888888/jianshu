@@ -17,6 +17,7 @@ class Users extends Migration
             $table->increments('id');
             $table->string('name',10);
             $table->string('password',191);
+            $table->string('avatar',10)->nullable(true);
             $table->string('email')->nullable(true);
         });
     }
