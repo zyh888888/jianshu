@@ -5,21 +5,23 @@ namespace App\Http\Controllers\Client;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\Comment;
 
 class PostController extends Controller
 {
     //文章列表
     public function index()
     {
-
-        $posts = Post::orderBy('created_at','desc')->paginate(6);
-        return view("post/index",['posts'=>$posts]);
+        $posts = Post::orderBy('created_at','desc')->withCount('comments')->paginate(6);
+        return view("post/index",compact('posts'));
     }
 
     //文章详情页面
     public function show(Post $post)
     {
-        return view('post/show', ['post'=>$post]);
+        //关联评论模型预加载，在渲染页面之前已经完成了关联模型的预加载
+        $post->load('comments');
+        return view('post/show', compact('post'));
     }
 
     //创建文章页面
@@ -132,6 +134,24 @@ class PostController extends Controller
         $post->delete();
         //渲染
         return redirect('/posts');
+    }
+
+    public function comment(Post $post)
+    {
+        //验证
+        $rules = [
+            'content' => 'required|min:3',
+        ];
+        $this->validate(request(),$rules);
+
+        //逻辑
+        $user_id = \Auth::id();
+        $post_id = $post->id;
+        $content = request('content');
+        $result = Comment::create(compact("user_id","post_id","content"));
+
+        //渲染
+        return back();
     }
 
 }

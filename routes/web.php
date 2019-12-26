@@ -36,6 +36,8 @@ Route::group(['middleware' => 'auth:web'],function(){
     Route::get('/posts/{post}/edit','Client\PostController@edit')->name('post.edit');//编辑文章 --模型绑定
     Route::put('/posts/{post}','Client\PostController@update')->name('post.update');//更新文章 --模型绑定
     Route::get('/posts/{post}/delete','Client\PostController@delete')->name('post.delete');//删除文章
+    /*评论模块*/
+    Route::post('/posts/{post}/comment','Client\PostController@comment')->name('post.comment');//增加评论
 
     /*上传图片*/
     Route::any('/posts/image/upload','Client\PostController@uploadImg')->name('post.upload.image');//上传图片

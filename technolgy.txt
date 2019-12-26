@@ -1,0 +1,45 @@
+=============2019-12-27=============
+1 ģ�͹���Ԥ���ص�ʹ��
+ ��ʽ1 $books = App\Book::with('author')->get();
+ ��ʽ2 $books = load('author','publisher');
+
+ ʹ�ó���:
+
+ ҳ����Ⱦ��
+                  <ul class="list-group">
+                    @foreach($post->comments as $comment)
+                    <li class="list-group-item">
+                        <h5>{{$comment->created_at}} by {{$comment->user->name}}</h5>
+                        <div>
+                            {{$comfile:/E:/github-jianshu/jianshu/technolgy.txtment->content}}
+                        </div>
+                    </li>
+                    @endforeach
+                </ul>
+
+ ��̨���ݴ���
+
+    public function show(Post $post)
+    {
+        $post->load('comments');
+        return view('post/show', compact('post'));
+    }
+
+2 ģ�͹�������
+     $posts = App\Post::withCount('comments)->get();
+    ��̨��ȡ����
+    //�����б�
+    public function index()
+    {
+        $posts = Post::orderBy('created_at','desc')->withCount('comments')->paginate(6);
+        return view("post/index",compact('posts'));
+    }
+
+    ҳ����Ⱦ
+
+    <p class="blog-post-meta">�� 0  | ���� {{$post->comments_count}}</p>
+
+
+    9999999999999
+    88888888888888
+
