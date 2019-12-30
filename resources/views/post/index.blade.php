@@ -43,7 +43,7 @@
                     </p>
 
                     {!! strlen($post->content)>100 ? mb_substr($post->content,0,100).'...' : $post->content !!}
-                    <p class="blog-post-meta">赞 0  | 评论 {{$post->comments_count}}</p>
+                    <p class="blog-post-meta">赞 {{$post->zans_count}}  | 评论 {{$post->comments_count}}</p>
                 </div>
             @endforeach
             <!-- /paginations -->

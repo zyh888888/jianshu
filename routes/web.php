@@ -38,6 +38,8 @@ Route::group(['middleware' => 'auth:web'],function(){
     Route::get('/posts/{post}/delete','Client\PostController@delete')->name('post.delete');//删除文章
     /*评论模块*/
     Route::post('/posts/{post}/comment','Client\PostController@comment')->name('post.comment');//增加评论
+    Route::get('/posts/{post}/zan','Client\PostController@zan')->name('post.zan');//点赞
+    Route::get('/posts/{post}/unZan','Client\PostController@unZan')->name('post.unZan');//取消点赞
 
     /*上传图片*/
     Route::any('/posts/image/upload','Client\PostController@uploadImg')->name('post.upload.image');//上传图片
