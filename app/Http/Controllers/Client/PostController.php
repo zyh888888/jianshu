@@ -12,7 +12,7 @@ class PostController extends Controller
     //文章列表
     public function index()
     {
-        $posts = Post::orderBy('created_at','desc')->withCount('comments')->paginate(6);
+        $posts = Post::orderBy('created_at','desc')->withCount(['comments','zans'])->paginate(6);
         return view("post/index",compact('posts'));
     }
 
@@ -136,6 +136,16 @@ class PostController extends Controller
         return redirect('/posts');
     }
 
+    /**
+     * @NOTES:评论
+     * @DESCRIPTION:
+     * @AUTH:zhou.yh
+     * @Date:2019/12/30 22:09
+     * @Version
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
     public function comment(Post $post)
     {
         //验证
@@ -151,6 +161,40 @@ class PostController extends Controller
         $result = Comment::create(compact("user_id","post_id","content"));
 
         //渲染
+        return back();
+    }
+
+    /**
+     * @NOTES:点赞
+     * @DESCRIPTION:firstOrCreate()
+     * @AUTH:zhou.yh
+     * @Date:2019/12/30 22:17
+     * @Version
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function zan(Post $post)
+    {
+        $user_id = \Auth::id();
+        $post_id = $post->id;
+        \App\Models\Zan::firstOrCreate(compact('user_id','post_id'));
+        return back();
+    }
+
+    /**
+     * @NOTES:取消点赞
+     * @DESCRIPTION:获取当前文章对应当前用户的点赞记录->delete()
+     * @AUTH:zhou.yh
+     * @Date:2019/12/30 22:25
+     * @Version
+     * @param Post $post
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function unZan(Post $post)
+    {
+        $user_id = \Auth::id();
+        $post_id = $post->id;
+        $post->zan($user_id)->delete();
         return back();
     }
 
