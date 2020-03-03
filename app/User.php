@@ -138,7 +138,4 @@ class User extends Authenticatable
         return $this->stars()->where('star_id',$uid)->count();
     }
 
-
-
-
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\User;
+use App\Models\Fan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ImageUploadService;
@@ -75,14 +76,36 @@ class UserController extends Controller
     }
 
     //关注某人
-    public function fan()
+    public function fan(User $user)
     {
-
+        $me = \Auth::user();
+        $me->doFan($user->id);
+        return ['error'=>0,'msg'=>''];
     }
 
     //取消关注
-    public function unfan()
+    public function unfan(User $user)
     {
+        $me = \Auth::user();
+        $me->doUnfan($user->id);
+        return ['error'=>0,'msg'=>''];
+    }
+
+    public function test()
+    {
+        $keyword = 'u';
+        $users = User::where(function($query) use ($keyword){
+            $query->where('name','like','%'. $keyword .'%')
+                ->orWhere('nickname','like','%'. $keyword .'%');
+        })->get();
+
+        $where[] = ['in'=>['fan_id'=>$users->pluck('id')]];
+        $orWhere[] = ['in'=>['star_id'=>$users->pluck('id')]];
+
+        $lists = Fan::where($where)->
+        orWhere($orWhere)->
+        orderBy('id','desc')->paginate(6);
+        return $lists;
 
     }
 
