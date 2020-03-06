@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFansTable extends Migration
+class CreateTestPostsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateFansTable extends Migration
      */
     public function up()
     {
-        Schema::create('fans', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('fan_id')->default(0); //粉丝id
-            $table->integer('star_id')->default(0);//关注id
+        Schema::create('test_posts', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ class CreateFansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fans');
+        Schema::dropIfExists('test_posts');
     }
 }

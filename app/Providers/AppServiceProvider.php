@@ -23,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        \View::composer('layout.sidebar',function($view){
+            $topics = \App\Models\Topic::all();
+            $view->with('topics',$topics);
+        });
     }
 }

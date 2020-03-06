@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateZansTable extends Migration
+class CreateTopicsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateZansTable extends Migration
      */
     public function up()
     {
-        Schema::create('zans', function (Blueprint $table) {
-            $table->increments('id');
-            $table->integer('post_id')->default(0);
-            $table->integer('user_id')->default(0);
+        Schema::create('topics', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name',30)->default('')->comment('专题名');
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateZansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('zans');
+        Schema::dropIfExists('topics');
     }
 }

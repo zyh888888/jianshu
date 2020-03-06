@@ -91,6 +91,10 @@ class UserController extends Controller
         return ['error'=>0,'msg'=>''];
     }
 
+    /**
+     * 测试
+     * @return mixed
+     */
     public function test()
     {
         $keyword = 'u';
@@ -106,7 +110,6 @@ class UserController extends Controller
         orWhere($orWhere)->
         orderBy('id','desc')->paginate(6);
         return $lists;
-
     }
 
 }

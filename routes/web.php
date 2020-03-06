@@ -24,7 +24,6 @@ Route::get('/login','User\LoginController@index')->name('login');//登录页面
 Route::post('/login','User\LoginController@login');//登录行为
 
 Route::group(['middleware' => 'auth:web'],function(){
-
     /*用户模块*/
     Route::get('/logout','User\LoginController@logout');//登出行为
     Route::get('/user/me/setting','User\UserController@setting');//个人设置页面
@@ -48,6 +47,11 @@ Route::group(['middleware' => 'auth:web'],function(){
     Route::get('/user/{user}','User\UserController@show')->name('user.show');//个人中心
     Route::post('/user/{user}/fan','User\UserController@fan')->name('user.fan');//关注某人
     Route::post('/user/{user}/unfan','User\UserController@unfan')->name('user.unfan');//取消关注
+
+    /*专题模块*/
+    Route::get('/topic/{topic}','Client\TopicController@show')->name('topic.show');
+    Route::get('/topic/submit','Client\TopicController@submit')->name('topic.submit');
+
 
 
 
